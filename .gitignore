@@ -1,0 +1,6 @@
+venv/
+.idea/
+.eggs/
+build/
+**.so
+**/__pycache__/

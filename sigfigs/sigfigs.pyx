@@ -31,11 +31,11 @@ cdef class SigFig:
 
     @property
     def most_significant_digit(SigFig self):
-        return cymath.floor(cymath.log10(self.raw_value))
+        return int(cymath.floor(cymath.log10(self.raw_value)))
 
     @property
     def least_significant_digit(SigFig self):
-        return self.most_significant_digit - self.sig_figs
+        return int(self.most_significant_digit - self.sig_figs)
 
     def __cinit__(SigFig self, double value, unsigned int sig_figs):
         self.raw_value = value
@@ -117,3 +117,8 @@ cdef class SigFig:
         value = cymath.round(value / scale)
         return value * scale
 
+    def __repr__(SigFig self):
+        decimals = max(0, -self.least_significant_digit - 1)
+        fmt_str = "{:." + str(decimals) + "f}"
+        print(fmt_str)
+        return fmt_str.format(self.get())
